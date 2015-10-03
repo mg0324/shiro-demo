@@ -4,3 +4,5 @@
 2.java ee的web环境，使用servlet的点对点框架FreamworkServlet来完成控制器部分。
 
 3.spring mvc + spring + shiro的整合，Realm部分可以替换成jdbcRealm。
+
+4.添加jdbc 数据库验证。
