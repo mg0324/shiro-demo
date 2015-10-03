@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
@@ -26,13 +28,13 @@ public class UserController {
 			//已经登陆
 			req.setAttribute("root",req.getContextPath());
 			req.setAttribute("info", "已经登陆");
-	        return "/main";
+	        return "/spring-main";
 		}
 		if(user !=null && user.isRemembered()){
 			//记住,从cookie中登陆，但是session中的用户信息null了。
 			req.setAttribute("root",req.getContextPath());
 			req.setAttribute("info", "被记住，从cookie中登陆");
-	        return "/main";
+	        return "/spring-main";
 		}
 		
 		req.setAttribute("root",req.getContextPath());
@@ -64,12 +66,18 @@ public class UserController {
 				user.login(token);
 				req.setAttribute("root",req.getContextPath());
 				req.setAttribute("info", "正常登陆");
-		        return "/main";
+		        return "/spring-main";
 			}
-		}catch (Exception e) {
+		}catch (UnknownAccountException e1) {
 			//做一些异常处理
-			e.printStackTrace();
-			req.setAttribute("msg", "登陆失败");
+			req.setAttribute("msg", "用户名错误");
+			req.setAttribute("loginname", loginname);
+			req.setAttribute("pwd", pwd);
+			req.setAttribute("root",req.getContextPath());
+	        return "/spring-login";
+		}catch (IncorrectCredentialsException e2) {
+			//做一些异常处理
+			req.setAttribute("msg", "密码错误");
 			req.setAttribute("loginname", loginname);
 			req.setAttribute("pwd", pwd);
 			req.setAttribute("root",req.getContextPath());

@@ -24,8 +24,9 @@
 	</bean>
 	<!-- 会话验证调度器 -->
 	<bean id="sessionValidationScheduler" class="org.apache.shiro.session.mgt.quartz.QuartzSessionValidationScheduler"> 
-		<property name="sessionValidationInterval" value="1800000" /> <property name="sessionManager" 
-		ref="sessionManager" /> </bean>
+		<property name="sessionValidationInterval" value="1800000" />
+		<property name="sessionManager" ref="sessionManager" />
+	</bean>
 	<!-- 会话Cookie模板 -->
 	<bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
 		<constructor-arg value="sid" />
@@ -44,9 +45,21 @@
 		<property name="sessionIdCookie" ref="sessionIdCookie" />
 	</bean>
 	<bean id="myRealm" class="demo.spring.web.MyRealm"/>
+	<bean id="myJdbcRealm" class="demo.spring.web.JdbcRealm"/>
+	<!-- <bean id="jdbcRealm" class="org.apache.shiro.realm.jdbc.JdbcRealm">
+        <property name="name" value="myJdbcRealm"/>
+        <property name="dataSource" ref="dataSource"/>
+        <property name="credentialsMatcher">
+            <bean class="org.apache.shiro.authc.credential.Sha256CredentialsMatcher">
+                <property name="storedCredentialsHexEncoded" value="false"/>
+                <property name="hashSalted" value="true"/>
+            </bean>
+        </property>
+        <property name="authorizationCacheName" value="shiro.authorizationCache"/>
+    </bean> -->
 	<!-- 安全管理器 -->
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-		<property name="realm" ref="myRealm" />
+		<property name="realm" ref="myJdbcRealm" />
 		<property name="sessionManager" ref="sessionManager" />
 		<property name="cacheManager" ref="cacheManager" />
 	</bean>

@@ -31,7 +31,7 @@
     </listener>
 	<context-param>
 	  <param-name>contextConfigLocation</param-name>
-	  <param-value>classpath:spring-shiro.xml</param-value>
+	  <param-value>classpath:spring-*.xml</param-value>
 	</context-param>
 	<!-- 配置Shiro过滤器,先让Shiro过滤系统接收到的请求 -->  
 	<!-- 这里filter-name必须对应applicationContext.xml中定义的<bean id="shiroFilter"/> -->  
